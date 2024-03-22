@@ -1,27 +1,37 @@
-function createGameboard() {
-    const line1 = [' ', ' ', ' ']
-    const line2 = [' ', ' ', ' ']
-    const line3 = [' ', ' ', ' ']
-    return { line1, line2, line3 }
+function createGameboard(row) {
+    const row1 = [' ', ' ', ' ']
+    const row2 = [' ', ' ', ' ']
+    const row3 = [' ', ' ', ' ']
+
+    const changeRow = (column) => {}
+    return { row1, row2, row3 }
 }
-function move() {
+function createPlayer (name, mark) {
+
+    const playerName = name
+    const playerMark = mark
+
     let current = 0
     const getCurrent = () => current
     const move = () => current++ 
 
-    return { getCurrent, move }
+    return { playerName, playerMark, getCurrent, move }
 }
-function player1 (name) {
-    const playerName = name
-    const mark = 'X'
-    return { playerName, mark }
+function putMarker (row, column) {
+    let gameboard = createGameboard()
+    let line = row
+    gameboard.line
 }
-function player2 (name) {
-    const playerName = name
-    const mark = 'O'
-    return { playerName, mark }
+
+function playGame() {
+
+    const player1 = createPlayer(prompt('Player1 name:'), prompt('Player1 mark:'))
+    const player2 = createPlayer(prompt('Player2 name:'), prompt('Player2 mark:'))
+
+    for (let i = 0;i < 5;i++) {
+        let putMarker = prompt(`${player1.playerName}, what row do you want to go?`)
+    }
 }
-createGameboard()
-player1(prompt('Player1 name:'))
-player2(prompt('Player2 name:'))
+playGame()
+
 
