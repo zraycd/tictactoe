@@ -26,23 +26,30 @@ function createPlayer (name, mark) {
 
 function checkForWin(gameboard) {
     const xWin = ['X', 'X', 'X'];
+    const oWin = ['O', 'O', 'O'];
 
-    const diagonal1 = [gameboard[0][0], gameboard[1][1], gameboard[2][2]];
-    const diagonal2 = [gameboard[0][2], gameboard[1][1], gameboard[2][0]];
-
-    if (checkLine(diagonal1, xWin) || checkLine(diagonal2, xWin)) {
-        return 'X';
+    const diagonal1 = [gameboard.gameboard[0][0], gameboard.gameboard[1][1], gameboard.gameboard[2][2]];
+    const diagonal2 = [gameboard.gameboard[0][2], gameboard.gameboard[1][1], gameboard.gameboard[2][0]];
+    if (checkLine(diagonal1, xWin) || checkLine(diagonal1, oWin) ||
+        checkLine(diagonal2, xWin) || checkLine(diagonal2, oWin)) {
+        return gameboard.gameboard[1][1] + ' wins';
     }
 
     for (let i = 0; i < 3; i++) {
-        const row = [gameboard[i][0], gameboard[i][1], gameboard[i][2]];
-        const col = [gameboard[0][i], gameboard[1][i], gameboard[2][i]];
-
+        const row = gameboard.gameboard[i];
+        const col = [gameboard.gameboard[0][i], gameboard.gameboard[1][i], gameboard.gameboard[2][i]];
         if (checkLine(row, xWin) || checkLine(col, xWin)) {
-            return 'X';
+            return 'X wins';
+        } else if (checkLine(row, oWin) || checkLine(col, oWin)) {
+            return 'O wins';
         }
     }
-    return 'continue'
+
+    if (gameboard.gameboard.flat().every(cell => cell === 'X' || cell === 'O')) {
+        return 'Draw';
+    }
+
+    return;
 }
 
 function checkLine(line, target) {
@@ -57,10 +64,19 @@ function playGame() {
 
     for (let i = 0;i < 5;i++) {
         gameboard.place(prompt(`${player1.playerName}, what row?`), prompt(`${player1.playerName}, what column?`), player1.playerMark)
-        gameboard.place(prompt(`${player2.playerName}, what row?`), prompt(`${player2.playerName}, what column?`), player2.playerMark)
-        
-        if (checkForWin(gameboard) === 'X') {
+        if (checkForWin(gameboard) === 'X wins') {
             console.log('X wins')
+            console.log(gameboard)
+            break;
+        }
+        gameboard.place(prompt(`${player2.playerName}, what row?`), prompt(`${player2.playerName}, what column?`), player2.playerMark)
+        if (checkForWin(gameboard) === 'O wins') {
+            console.log('O wins')
+            console.log(gameboard)
+            break;
+        } else if (checkForWin(gameboard) === 'Draw') {
+            console.log('Its a draw')
+            console.log(gameboard)
             break;
         }
     }
