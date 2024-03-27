@@ -58,22 +58,33 @@ function playGame() {
     let gameboard = createGameboard();
     let currentClicks = 0;
 
-    gameboard.gameboard.forEach(row => {
-        row.forEach(innerCell => {
-            innerCell.addEventListener('click', () => {
-                if (innerCell.innerText === '') {
-                    if (currentClicks % 2 === 0) {
-                        innerCell.innerText = 'X';
-                    } else {
-                        innerCell.innerText = 'O';
-                    }
-                    currentClicks++;
-                    if (checkForWin(gameboard) === 'X wins' || checkForWin(gameboard) === 'O wins' || checkForWin(gameboard) === 'Its a draw') {
-                        console.log(checkForWin(gameboard))
-                    }
-                }
-            })
-        })
-    })
+    const boardContainer = document.querySelector('#container');
+    boardContainer.addEventListener('click', handleClick);
+
+    function handleClick(event) {
+        const clickedCell = event.target;
+        if (!clickedCell.classList.contains('cell')) {
+            return;
+        }
+
+        if (clickedCell.innerText === '') {
+            if (currentClicks % 2 === 0) {
+                clickedCell.innerText = 'X';
+            } else {
+                clickedCell.innerText = 'O';
+            }
+            currentClicks++;
+
+            let result = checkForWin(gameboard);
+            if (result === 'X wins' || result === 'O wins' || result === 'Draw') {
+                console.log(result);
+                endGame();
+            }
+        }
+    }
+
+    function endGame() {
+        boardContainer.removeEventListener('click', handleClick);
+    }
 }
 playGame()
