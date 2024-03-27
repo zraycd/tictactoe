@@ -1,5 +1,5 @@
-const player1 = createPlayer(prompt('Player1 name:'), 'X')
-const player2 = createPlayer(prompt('Player2 name:'), 'O')
+// const player1 = createPlayer(prompt('Player1 name:'), 'X')
+// const player2 = createPlayer(prompt('Player2 name:'), 'O')
 
 function createGameboard() {
 
@@ -90,4 +90,3 @@ function playGame() {
         
     }
 }
-playGame()
