@@ -32,23 +32,23 @@ function checkForWin(gameboard) {
     const diagonal2 = [gameboard.gameboard[0][2], gameboard.gameboard[1][1], gameboard.gameboard[2][0]];
     if (checkLine(diagonal1, xWin) || checkLine(diagonal1, oWin) ||
         checkLine(diagonal2, xWin) || checkLine(diagonal2, oWin)) {
-        console.log(gameboard.gameboard[1][1] + ' wins')
+        return gameboard.gameboard[1][1] + ' wins'
     }
 
     for (let i = 0; i < 3; i++) {
         const row = gameboard.gameboard[i];
         const col = [gameboard.gameboard[0][i], gameboard.gameboard[1][i], gameboard.gameboard[2][i]];
         if (checkLine(row, xWin) || checkLine(col, xWin)) {
-            console.log('X wins')
+            return 'X wins'
         } else if (checkLine(row, oWin) || checkLine(col, oWin)) {
-            console.log('O wins')
+            return 'O wins'
         }
     }
 
     if (gameboard.gameboard.flat().every(cell => cell === 'X' || cell === 'O')) {
-        console.log('Its a draw')
+        return 'Its a draw'
     }
-    return;
+    return 'No winner';
 }
 
 function checkLine(line, target) {
