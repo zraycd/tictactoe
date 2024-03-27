@@ -1,3 +1,6 @@
+const player1 = createPlayer(prompt('Player1 name:'), 'X')
+const player2 = createPlayer(prompt('Player2 name:'), 'O')
+
 function createGameboard() {
 
     const gameboard = [
@@ -7,7 +10,11 @@ function createGameboard() {
     ]
 
     const place = (row, column, marker) => {
-        gameboard[row - 1][column - 1] = marker
+        if (gameboard[row - 1][column - 1] === ' ') {
+            gameboard[row - 1][column - 1] = marker
+        } else {
+            return 'filled'
+        }
     }
     return { gameboard, place }
 }
@@ -58,20 +65,24 @@ function checkLine(line, target) {
 function playGame() {
     let gameboard = createGameboard()
 
-    const player1 = createPlayer(prompt('Player1 name:'), prompt('Player1 mark:'))
-    const player2 = createPlayer(prompt('Player2 name:'), prompt('Player2 mark:'))
-
     for (let i = 0;i < 5;i++) {
+
+        let player1Current
+        let player2Current
+
+        do {
+            player1Current = gameboard.place(prompt(`${player1.playerName}, what row?`), prompt(`${player1.playerName}, what column?`), player1.playerMark)
+        } while (player1Current === 'filled')
+
         if (checkForWin(gameboard) === 'X wins' || checkForWin(gameboard) === 'O wins' || checkForWin(gameboard) === 'Its a draw') {
             console.log(gameboard)
             break;
         }
-        gameboard.place(prompt(`${player1.playerName}, what row?`), prompt(`${player1.playerName}, what column?`), player1.playerMark)
-        if (checkForWin(gameboard) === 'X wins' || checkForWin(gameboard) === 'O wins' || checkForWin(gameboard) === 'Its a draw') {
-            console.log(gameboard)
-            break;
-        }
-        gameboard.place(prompt(`${player2.playerName}, what row?`), prompt(`${player2.playerName}, what column?`), player2.playerMark)
+
+        do {
+            player2Current = gameboard.place(prompt(`${player2.playerName}, what row?`), prompt(`${player2.playerName}, what column?`), player2.playerMark)
+        } while (player2Current === 'filled')
+        
         if (checkForWin(gameboard) === 'X wins' || checkForWin(gameboard) === 'O wins' || checkForWin(gameboard) === 'Its a draw') {
             console.log(gameboard)
             break;
