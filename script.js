@@ -1,17 +1,17 @@
-// const player1 = createPlayer(prompt('Player1 name:'), 'X')
-// const player2 = createPlayer(prompt('Player2 name:'), 'O')
-
 function createGameboard() {
 
+    const cell = document.querySelectorAll('.cell')
+
     const gameboard = [
-        [' ', ' ', ' '],
-        [' ', ' ', ' '],
-        [' ', ' ', ' ']
+        [cell[0], cell[1], cell[2]],
+        [cell[3], cell[4], cell[5]],
+        [cell[6], cell[7], cell[8]]
     ]
 
-    const place = (row, column, marker) => {
-        if (gameboard[row - 1][column - 1] === ' ') {
-            gameboard[row - 1][column - 1] = marker
+    const place = (position, marker) => {
+
+        if (position.innerText === undefined) {
+            position.innerText = `${marker}`
         } else {
             return 'filled'
         }
@@ -19,74 +19,61 @@ function createGameboard() {
     return { gameboard, place }
 }
 
-function createPlayer (name, mark) {
-
-    const playerName = name
-    const playerMark = mark
-
-    let current = 0
-    const getCurrent = () => current
-    const move = () => current++ 
-
-    return { playerName, playerMark, getCurrent, move }
-}
-
 function checkForWin(gameboard) {
+
     const xWin = ['X', 'X', 'X'];
     const oWin = ['O', 'O', 'O'];
 
-    const diagonal1 = [gameboard.gameboard[0][0], gameboard.gameboard[1][1], gameboard.gameboard[2][2]];
-    const diagonal2 = [gameboard.gameboard[0][2], gameboard.gameboard[1][1], gameboard.gameboard[2][0]];
-    if (checkLine(diagonal1, xWin) || checkLine(diagonal1, oWin) ||
-        checkLine(diagonal2, xWin) || checkLine(diagonal2, oWin)) {
-        return gameboard.gameboard[1][1] + ' wins'
+    const diagonal1 = [gameboard.gameboard[0][0].innerText, gameboard.gameboard[1][1].innerText, gameboard.gameboard[2][2].innerText];
+    const diagonal2 = [gameboard.gameboard[0][2].innerText, gameboard.gameboard[1][1].innerText, gameboard.gameboard[2][0].innerText];
+    if (checkColumn(diagonal1, xWin) || checkColumn(diagonal1, oWin) ||
+        checkColumn(diagonal2, xWin) || checkColumn(diagonal2, oWin)) {
+        return gameboard.gameboard[1][1].innerText + ' wins'
     }
 
     for (let i = 0; i < 3; i++) {
         const row = gameboard.gameboard[i];
-        const col = [gameboard.gameboard[0][i], gameboard.gameboard[1][i], gameboard.gameboard[2][i]];
-        if (checkLine(row, xWin) || checkLine(col, xWin)) {
+        const col = [gameboard.gameboard[0][i].innerText, gameboard.gameboard[1][i].innerText, gameboard.gameboard[2][i].innerText];
+        if (checkLine(row, xWin) || checkColumn(col, xWin)) {
             return 'X wins'
-        } else if (checkLine(row, oWin) || checkLine(col, oWin)) {
+        } else if (checkLine(row, oWin) || checkColumn(col, oWin)) {
             return 'O wins'
         }
     }
 
-    if (gameboard.gameboard.flat().every(cell => cell === 'X' || cell === 'O')) {
+    if (gameboard.gameboard.flat().every(cell => cell.innerText === 'X' || cell.innerText === 'O')) {
         return 'Its a draw'
     }
     return 'No winner';
 }
 
 function checkLine(line, target) {
+    return line.every(element => element.innerText === target[0]);
+}
+function checkColumn(line, target) {
     return line.every(element => element === target[0]);
 }
 
 function playGame() {
-    let gameboard = createGameboard()
+    let gameboard = createGameboard();
+    let currentClicks = 0;
 
-    for (let i = 0;i < 5;i++) {
-
-        let player1Current
-        let player2Current
-
-        do {
-            player1Current = gameboard.place(prompt(`${player1.playerName}, what row?`), prompt(`${player1.playerName}, what column?`), player1.playerMark)
-        } while (player1Current === 'filled')
-
-        if (checkForWin(gameboard) === 'X wins' || checkForWin(gameboard) === 'O wins' || checkForWin(gameboard) === 'Its a draw') {
-            console.log(gameboard)
-            break;
-        }
-
-        do {
-            player2Current = gameboard.place(prompt(`${player2.playerName}, what row?`), prompt(`${player2.playerName}, what column?`), player2.playerMark)
-        } while (player2Current === 'filled')
-        
-        if (checkForWin(gameboard) === 'X wins' || checkForWin(gameboard) === 'O wins' || checkForWin(gameboard) === 'Its a draw') {
-            console.log(gameboard)
-            break;
-        }
-        
-    }
+    gameboard.gameboard.forEach(row => {
+        row.forEach(innerCell => {
+            innerCell.addEventListener('click', () => {
+                if (innerCell.innerText === '') {
+                    if (currentClicks % 2 === 0) {
+                        innerCell.innerText = 'X';
+                    } else {
+                        innerCell.innerText = 'O';
+                    }
+                    currentClicks++;
+                    if (checkForWin(gameboard) === 'X wins' || checkForWin(gameboard) === 'O wins' || checkForWin(gameboard) === 'Its a draw') {
+                        console.log(checkForWin(gameboard))
+                    }
+                }
+            })
+        })
+    })
 }
+playGame()
