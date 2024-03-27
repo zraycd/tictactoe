@@ -8,15 +8,7 @@ function createGameboard() {
         [cell[6], cell[7], cell[8]]
     ]
 
-    const place = (position, marker) => {
-
-        if (position.innerText === undefined) {
-            position.innerText = `${marker}`
-        } else {
-            return 'filled'
-        }
-    }
-    return { gameboard, place }
+    return { gameboard}
 }
 
 function checkForWin(gameboard) {
