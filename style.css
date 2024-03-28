@@ -28,3 +28,32 @@ body {
     font-size: 4rem;
     font-weight: 900;
 }
+.diagonal, .straight {
+    display: none;
+}
+.diagonal {
+    position: absolute;
+    height: 650px;
+    width: 10px;
+    background-color: black;
+    z-index: 5;
+}
+.dg1 {
+    transform: rotate(-45deg);
+}
+.dg2 {
+    transform: rotate(45deg);
+}
+.straight {
+    position: absolute;
+    height: 475px;
+    width: 10px;
+    background-color: black;
+    z-index: 5;
+}
+.vert {
+    transform: rotate(180deg);
+}
+.horizontal {
+    transform: rotate(90deg);
+}
