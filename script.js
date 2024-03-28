@@ -16,34 +16,64 @@ function checkForWin(gameboard) {
     const xWin = ['X', 'X', 'X'];
     const oWin = ['O', 'O', 'O'];
 
-    const diagonal1 = [gameboard.gameboard[0][0].innerText, gameboard.gameboard[1][1].innerText, gameboard.gameboard[2][2].innerText];
-    const diagonal2 = [gameboard.gameboard[0][2].innerText, gameboard.gameboard[1][1].innerText, gameboard.gameboard[2][0].innerText];
-    if (checkColumn(diagonal1, xWin) || checkColumn(diagonal1, oWin) ||
-        checkColumn(diagonal2, xWin) || checkColumn(diagonal2, oWin)) {
-        return gameboard.gameboard[1][1].innerText + ' wins'
+    const diagonal1 = [gameboard.gameboard[0][0].querySelector('.display').innerText, gameboard.gameboard[1][1].querySelector('.display').innerText, gameboard.gameboard[2][2].querySelector('.display').innerText];
+    const diagonal2 = [gameboard.gameboard[0][2].querySelector('.display').innerText, gameboard.gameboard[1][1].querySelector('.display').innerText, gameboard.gameboard[2][0].querySelector('.display').innerText];
+    if (checkColumn(diagonal1, xWin) || checkColumn(diagonal1, oWin)) {
+        displayWin(document.querySelector('#diagonal1'))
+        return
+    } else if (checkColumn(diagonal2, xWin) || checkColumn(diagonal2, oWin)) {
+        displayWin(document.querySelector('#diagonal2'))
+        return
     }
 
     for (let i = 0; i < 3; i++) {
         const row = gameboard.gameboard[i];
-        const col = [gameboard.gameboard[0][i].innerText, gameboard.gameboard[1][i].innerText, gameboard.gameboard[2][i].innerText];
-        if (checkLine(row, xWin) || checkColumn(col, xWin)) {
-            return 'X wins'
-        } else if (checkLine(row, oWin) || checkColumn(col, oWin)) {
-            return 'O wins'
+        const col = [gameboard.gameboard[0][i].querySelector('.display').innerText, gameboard.gameboard[1][i].querySelector('.display').innerText, gameboard.gameboard[2][i].querySelector('.display').innerText];
+        if (checkLine(row, xWin) || checkLine(row, oWin)) {
+            if (i === 0) {
+                displayWin(document.querySelector('#top'))
+                return
+            } else if (i === 1) {
+                displayWin(document.querySelector('#midHorizontal'))
+                return
+            } else {
+                displayWin(document.querySelector('#bottom'))
+                return
+            }
+        } else if (checkColumn(col, xWin) || checkColumn(col, oWin)) {
+            if (i === 0) {
+                displayWin(document.querySelector('#left'))
+                return
+            } else if (i === 1) {
+                displayWin(document.querySelector('#midVertical'))
+                return
+            } else {
+                displayWin(document.querySelector('#right'))
+                return
+            }
         }
     }
 
-    if (gameboard.gameboard.flat().every(cell => cell.innerText === 'X' || cell.innerText === 'O')) {
+    if (gameboard.gameboard.flat().every(cell => cell.querySelector('.display').innerText === 'X' || cell.querySelector('.display').innerText === 'O')) {
         return 'Its a draw'
     }
     return 'No winner';
 }
 
 function checkLine(line, target) {
-    return line.every(element => element.innerText === target[0]);
+    return line.every(element => element.querySelector('.display').innerText === target[0]);
 }
 function checkColumn(line, target) {
     return line.every(element => element === target[0]);
+}
+function displayWin (line) {
+    let win = document.querySelectorAll('.line')
+    
+    win.forEach(checkLine => {
+        if (checkLine = line) {
+            checkLine.style.display = 'block'
+        }
+    })
 }
 
 function playGame() {
@@ -55,7 +85,7 @@ function playGame() {
 
     function handleClick(event) {
         const clickedCell = event.target;
-        if (!clickedCell.classList.contains('cell')) {
+        if (!clickedCell.classList.contains('display')) {
             return;
         }
 
@@ -68,8 +98,7 @@ function playGame() {
             currentClicks++;
 
             let result = checkForWin(gameboard);
-            if (result === 'X wins' || result === 'O wins' || result === 'Draw') {
-                console.log(result);
+            if (result !== 'No winner') {
                 endGame();
             }
         }

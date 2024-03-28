@@ -28,28 +28,32 @@ body {
     font-size: 4rem;
     font-weight: 900;
 }
-.diagonal, .straight {
+.display {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    font-weight: 900;
+}
+.line {
     display: none;
 }
-.diagonal {
-    position: absolute;
-    height: 650px;
-    width: 10px;
-    background-color: black;
-    z-index: 5;
-}
-.dg1 {
-    transform: rotate(-45deg);
-}
-.dg2 {
-    transform: rotate(45deg);
-}
-.straight {
+.line {
     position: absolute;
     height: 475px;
     width: 10px;
     background-color: black;
     z-index: 5;
+}
+.dg1 {
+    height: 650px;
+    transform: rotate(-45deg);
+}
+.dg2 {
+    height: 650px;
+    transform: rotate(45deg);
 }
 .vert {
     transform: rotate(180deg);
