@@ -103,6 +103,7 @@ function playGame() {
             if (result !== 'No winner') {
                 document.querySelector('#reset').addEventListener('click', () => {
                     endGame()
+                    currentClicks = 0
                 })
             }
         }
