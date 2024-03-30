@@ -101,15 +101,16 @@ function playGame() {
 
             let result = checkForWin(gameboard);
             if (result !== 'No winner') {
+                boardContainer.removeEventListener('click', handleClick)
                 document.querySelector('#reset').addEventListener('click', () => {
-                    endGame()
+                    resetGame()
                     currentClicks = 0
                 })
             }
         }
     }
 }
-function endGame() {
+function resetGame() {
     let cells = document.querySelectorAll('.display')
 
     cells.forEach(cell => {
