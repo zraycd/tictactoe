@@ -79,3 +79,18 @@ button:hover {
 button:active {
     background-color: rgb(172, 172, 172);
 }
+@media (max-width: 600px) {
+    #container {
+        width: 300px;
+        height: 300px;
+    }
+    .line {
+        height: 275px;
+    }
+    .dg1, .dg2 {
+        height: 375px;
+    }
+    .cell, .display {
+        font-weight: 800;
+    }
+}
