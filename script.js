@@ -8,7 +8,7 @@ function createGameboard() {
         [cell[6], cell[7], cell[8]]
     ]
 
-    return { gameboard}
+    return { gameboard }
 }
 
 function checkForWin(gameboard) {
@@ -70,14 +70,16 @@ function displayWin (line) {
     let win = document.querySelectorAll('.line')
     
     win.forEach(checkLine => {
-        if (checkLine = line) {
+        if (checkLine === line) {
             checkLine.style.display = 'block'
+        } else if (line === 'reset') {
+            checkLine.style.display = 'none'
         }
     })
 }
 
 function playGame() {
-    let gameboard = createGameboard();
+    const gameboard = createGameboard()
     let currentClicks = 0;
 
     const boardContainer = document.querySelector('#container');
@@ -99,13 +101,20 @@ function playGame() {
 
             let result = checkForWin(gameboard);
             if (result !== 'No winner') {
-                endGame();
+                document.querySelector('#reset').addEventListener('click', () => {
+                    endGame()
+                })
             }
         }
     }
+}
+function endGame() {
+    let cells = document.querySelectorAll('.display')
 
-    function endGame() {
-        boardContainer.removeEventListener('click', handleClick);
-    }
+    cells.forEach(cell => {
+        cell.innerText = ''
+    })
+    displayWin('reset')
+    playGame()
 }
 playGame()
