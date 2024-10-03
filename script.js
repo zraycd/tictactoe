@@ -37,4 +37,23 @@ class Gameboard {
     this.lastMark = { row: row, col: col };
     this.moveCount++;
   }
+
+  resetBoard() {
+    this.moveCount = 0;
+    this.type === "normal"
+      ? this.board.forEach((row, rowIndex) => {
+          row.forEach((col, colIndex) => {
+            this.board[rowIndex][colIndex] = null;
+          });
+        })
+      : this.board.forEach((row) => {
+          row.forEach((innerBoard) => {
+            innerBoard.forEach((innerRow, innerRowIndex) => {
+              innerRow.forEach((cell, cellIndex) => {
+                innerBoard[innerRowIndex][cellIndex] = null;
+              });
+            });
+          });
+        });
+  }
 }
