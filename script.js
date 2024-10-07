@@ -1,11 +1,11 @@
-class Gameb {
+class Gameboard {
   constructor(type) {
     this.type = type;
     //prettier-ignore
-    this.b = new Array(3).fill(0).map(() => new Array(3).fill(0).map(() => null));
+    this.board = new Array(3).fill(0).map(() => new Array(3).fill(0).map(() => null));
     if (this.type !== "normal") {
       //prettier-ignore
-      this.b = this.b.map(row => row.map(() => new Gameb("normal").b));
+      this.board = this.board.map(row => row.map(() => new Gameboard("normal").board));
     }
     this.moveCount = 0;
     this.lastMark = null;
@@ -13,9 +13,9 @@ class Gameb {
 
   getFocus() {
     if (this.lastMark === null) {
-      return this.b;
+      return this.board;
     } else {
-      return this.b[this.lastMark.row][this.lastMark.col];
+      return this.board[this.lastMark.row][this.lastMark.col];
     }
   }
 
@@ -29,24 +29,43 @@ class Gameb {
       if (this.moveCount === 0) {
         this.lastMark = { row: row, col: col };
       } else {
-        this.moveCount % 2 === 0
+        this.moveCount % 2 === 1
           ? (this.getFocus()[row][col] = "X")
           : (this.getFocus()[row][col] = "O");
       }
     }
-    this.lastMark = { row: row, col: col };
     this.moveCount++;
+    let winCheckUlt;
+    try {
+      //prettier-ignore
+      winCheckUlt = this.checkForWin(this.board[this.lastMark.row][this.lastMark.col])
+    } catch {
+      winCheckUlt = null;
+    }
+
+    if (winCheckUlt !== null) {
+      let i = this.board[this.lastMark.row][this.lastMark.col];
+      //prettier-ignore
+      this.board[this.lastMark.row][this.lastMark.col] = i[winCheckUlt[0][0]][winCheckUlt[0][1]];
+    }
+    if (this.checkForWin(this.board) !== null) {
+      let i = this.checkForWin(this.board);
+      this.board = this.board[i[0][0]][i[0][1]];
+      return `${this.board} wins`;
+    }
+
+    this.lastMark = { row: row, col: col };
   }
 
-  resetb() {
+  resetBoard() {
     this.moveCount = 0;
     this.type === "normal"
-      ? this.b.forEach((row, rowIndex) => {
+      ? this.board.forEach((row, rowIndex) => {
           row.forEach((col, colIndex) => {
-            this.b[rowIndex][colIndex] = null;
+            this.board[rowIndex][colIndex] = null;
           });
         })
-      : this.b.forEach((row) => {
+      : this.board.forEach((row) => {
           row.forEach((innerb) => {
             innerb.forEach((innerRow, innerRowIndex) => {
               innerRow.forEach((cell, cellIndex) => {
@@ -71,6 +90,8 @@ class Gameb {
       [[0, 0], [1, 1], [2, 2]],
       [[0, 2], [1, 1], [2, 0]]
     ];
+
+    // change reset func to make a new func instead of replacing old content with nulls
 
     for (let combination of winningCombinations) {
       const [x, y, z] = combination;
