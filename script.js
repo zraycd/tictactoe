@@ -22,18 +22,24 @@ class Gameboard {
   placeMarker(row, col) {
     if (this.type === "normal") {
       this.lastMark = null;
+
+      if (this.getFocus()[row][col] !== null) {
+        return;
+      }
+
       this.moveCount % 2 === 0
         ? (this.getFocus()[row][col] = "X")
         : (this.getFocus()[row][col] = "O");
+    } else if (this.moveCount === 0) {
+      this.lastMark = { row: row, col: col };
+    } else if (this.getFocus()[row][col] !== null) {
+      return;
     } else {
-      if (this.moveCount === 0) {
-        this.lastMark = { row: row, col: col };
-      } else {
-        this.moveCount % 2 === 1
-          ? (this.getFocus()[row][col] = "X")
-          : (this.getFocus()[row][col] = "O");
-      }
+      this.moveCount % 2 === 1
+        ? (this.getFocus()[row][col] = "X")
+        : (this.getFocus()[row][col] = "O");
     }
+
     this.moveCount++;
     let winCheckUlt;
     try {
