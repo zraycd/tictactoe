@@ -59,21 +59,12 @@ class Gameboard {
 
   resetBoard() {
     this.moveCount = 0;
-    this.type === "normal"
-      ? this.board.forEach((row, rowIndex) => {
-          row.forEach((col, colIndex) => {
-            this.board[rowIndex][colIndex] = null;
-          });
-        })
-      : this.board.forEach((row) => {
-          row.forEach((innerb) => {
-            innerb.forEach((innerRow, innerRowIndex) => {
-              innerRow.forEach((cell, cellIndex) => {
-                innerb[innerRowIndex][cellIndex] = null;
-              });
-            });
-          });
-        });
+    //prettier-ignore
+    this.board = new Array(3).fill(0).map(() => new Array(3).fill(0).map(() => null))
+    if (this.type !== "normal") {
+      //prettier-ignore
+      this.board = this.board.map(row => row.map(() => new Gameboard("normal").board));
+    }
   }
 
   checkForWin(b) {
@@ -90,8 +81,6 @@ class Gameboard {
       [[0, 0], [1, 1], [2, 2]],
       [[0, 2], [1, 1], [2, 0]]
     ];
-
-    // change reset func to make a new func instead of replacing old content with nulls
 
     for (let combination of winningCombinations) {
       const [x, y, z] = combination;
