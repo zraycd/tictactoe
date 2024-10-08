@@ -3,94 +3,44 @@ body {
     overflow: hidden;
     background-color: lightgrey;
     font-family: "Nunito", sans-serif;
-}
-.body {
     height: 100vh;
-    width: 100%;
+    width: 100vw;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    gap: 5rem;
+    margin: 10px;
 }
-#container {
-    height: 500px;
-    width: 500px;
-    background-color: black;
-    display: grid;
-    grid-template-rows: repeat(3, 1fr);
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-}
-.cell {
-    background-color: lightgrey;
+.topWrap {
+    height: 6%;
+    width: 33%;
     display: flex;
+    justify-content: space-around;
     align-items: center;
-    justify-content: center;
-    font-size: 4rem;
-    font-weight: 900;
+
 }
-.display {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 4rem;
-    font-weight: 900;
-}
-.line {
-    display: none;
-}
-.line {
-    position: absolute;
-    height: 475px;
-    width: 10px;
-    background-color: black;
-    z-index: 5;
-}
-.dg1 {
-    height: 650px;
-    transform: rotate(-45deg);
-}
-.dg2 {
-    height: 650px;
-    transform: rotate(45deg);
-}
-.vert {
-    transform: rotate(180deg);
-}
-.horizontal {
-    transform: rotate(90deg);
-}
+
 button {
-    padding: 12px 48px;
-    color: white;
     background-color: rgb(156, 156, 156);
-    font-size: 1.5rem;
-    font-weight: bold;
+    padding: 12px 24px;
     border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
     border: none;
 }
+
 button:hover {
-    background-color: rgb(148, 148, 148);
     cursor: pointer;
+    filter: brightness(95%);
 }
-button:active {
-    background-color: rgb(172, 172, 172);
-}
-@media (max-width: 600px) {
-    #container {
-        width: 300px;
-        height: 300px;
-    }
-    .line {
-        height: 275px;
-    }
-    .dg1, .dg2 {
-        height: 375px;
-    }
-    .cell, .display {
-        font-weight: 800;
-    }
+
+.mainContainer {
+    height: 75%;
+    width: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid black;
 }

@@ -101,4 +101,29 @@ class Gameboard {
 
     return null;
   }
+  displayBoard(mainContainer = document.querySelector(".mainContainer")) {
+    if (this.type === "normal") {
+      this.board.forEach((mainRow) => {
+        mainRow.forEach((mainCol) => {
+          let cell = document.createElement("div");
+          cell.classList.add("cell");
+          mainContainer.appendChild(cell);
+        });
+      });
+    } else {
+      this.board.forEach((mainRow) => {
+        mainRow.forEach((mainCol) => {
+          let container = document.createElement("div");
+          container.classList.add("container");
+          mainContainer.appendChild(container);
+        });
+      });
+      document.querySelectorAll(".container").forEach((container) => {
+        let i = new Gameboard("normal");
+        i.displayBoard(container);
+      });
+    }
+  }
 }
+let normalGame = new Gameboard("normal");
+let ultimateGame = new Gameboard("ultimate");
