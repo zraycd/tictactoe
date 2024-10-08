@@ -45,10 +45,11 @@ button:hover {
     display: grid;
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 12px;
 }
 .container {
-    border: 10px solid lightgrey;
+    border: 12px solid lightgrey;
+    gap: 8px;
 }
 .container:hover {
     cursor: pointer;
@@ -56,4 +57,7 @@ button:hover {
 }
 .cell {
     background-color: lightgrey;
+}
+.cell:hover {
+    filter: brightness(90%);
 }
