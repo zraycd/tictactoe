@@ -124,6 +124,33 @@ class Gameboard {
       });
     }
   }
+  hideBoard() {
+    document.querySelectorAll(".container").forEach((ctn) => ctn.remove());
+    document.querySelectorAll(".cell").forEach((cell) => cell.remove());
+  }
 }
-let normalGame = new Gameboard("normal");
-let ultimateGame = new Gameboard("ultimate");
+const normalBtn = document.querySelector("#normalBtn");
+const ultimateBtn = document.querySelector("#ultimateBtn");
+const resetBtn = document.querySelector("#resetBtn");
+
+const normalGame = new Gameboard("normal");
+const ultimateGame = new Gameboard("ultimate");
+
+let current;
+
+normalGame.displayBoard();
+normalBtn.addEventListener("click", () => {
+  current = normalGame;
+  ultimateGame.hideBoard();
+  normalGame.displayBoard();
+});
+
+ultimateBtn.addEventListener("click", () => {
+  current = ultimateGame;
+  normalGame.hideBoard();
+  ultimateGame.displayBoard();
+});
+
+resetBtn.addEventListener("click", () => {
+  current.resetBoard();
+});

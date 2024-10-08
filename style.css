@@ -35,12 +35,25 @@ button:hover {
     cursor: pointer;
     filter: brightness(95%);
 }
-
 .mainContainer {
     height: 75%;
-    width: 75%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 5px solid black;
+    aspect-ratio: 1 / 1;
+}
+
+.mainContainer, .container {
+    background-color: black;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.container {
+    border: 10px solid lightgrey;
+}
+.container:hover {
+    cursor: pointer;
+    filter: brightness(90%);
+}
+.cell {
+    background-color: lightgrey;
 }
