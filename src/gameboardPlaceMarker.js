@@ -24,29 +24,10 @@ class gameboardPlace extends baseGameboard {
     this.hideBoard();
     this.displayBoard();
     this.moveCount++;
-    let winCheckUlt;
-    try {
-      //prettier-ignore
-      winCheckUlt = this.checkForWin(this.board[this.lastMark.row][this.lastMark.col])
-    } catch {
-      winCheckUlt = null;
-    }
 
-    if (winCheckUlt !== null) {
-      this.hideBoard();
-      this.displayBoard();
-      let i = this.board[this.lastMark.row][this.lastMark.col];
-      //prettier-ignore
-      this.board[this.lastMark.row][this.lastMark.col] = i[winCheckUlt[0][0]][winCheckUlt[0][1]];
-    }
-    if (this.checkForWin(this.board) !== null) {
-      let i = this.checkForWin(this.board);
-      this.winner = i;
-      this.hideBoard();
-      this.displayBoard();
-      this.board = this.board[i[0][0]][i[0][1]];
-      return;
-    }
+    this.type === "normal"
+      ? this.checkForWin(this.board)
+      : this.checkForWin(this.board[this.lastMark.row][this.lastMark.col]);
     this.lastMark = { row: row, col: col };
     console.log("change");
   }
@@ -73,6 +54,10 @@ class gameboardPlace extends baseGameboard {
         b[x[0]][x[1]] === b[y[0]][y[1]] &&
         b[x[0]][x[1]] === b[z[0]][z[1]]
       ) {
+        this.hideBoard();
+        this.displayBoard();
+
+        this.board = b[x[0]][x[1]];
         return combination;
       }
     }
