@@ -1,12 +1,25 @@
 import gameboardPlace from "./gameboardPlaceMarker";
 
 class gameboardManipulation extends gameboardPlace {
-  displayBoard(mainContainer = document.querySelector(".mainContainer")) {
+  displayBoard(
+    mainContainer = document.querySelector(".mainContainer"),
+    winParams = []
+  ) {
+    console.log(winParams[0]);
+    if (this.winner) {
+      let winLine = document.querySelector(".line");
+
+      winLine.style.transform = `translate(${winParams[0]}vh, ${winParams[1]}vh) rotate(${winParams[2]}deg) scale(1, ${winParams[3]})`;
+      winLine.style.display = "block";
+
+      return;
+    }
+
     //prettier-ignore
     const coordinates = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]];
     let j = 0;
 
-    if (this.type === "normal") {
+    if (this.type === "normal" && !this.winner) {
       this.board.forEach((mainRow) => {
         mainRow.forEach((mainCol) => {
           let cell = document.createElement("div");
@@ -28,7 +41,9 @@ class gameboardManipulation extends gameboardPlace {
         mainRow.forEach((mainCol) => {
           let container = document.createElement("div");
           container.classList.add("container");
-          container.dataset.coordinates = JSON.stringify(coordinates[j]);
+          container.dataset.row = JSON.stringify(coordinates[j][0]);
+          container.dataset.col = JSON.stringify(coordinates[j][1]);
+          container.dataset.locked = JSON.stringify(false);
           mainContainer.appendChild(container);
           j++;
         });
@@ -36,7 +51,7 @@ class gameboardManipulation extends gameboardPlace {
 
       document.querySelectorAll(".container").forEach((container) => {
         let i = new (require("./gameboard").default)("normal");
-        i.board = this.board;
+        i.board = this.board[container.dataset.row][container.dataset.col];
         i.displayBoard(container);
       });
     }

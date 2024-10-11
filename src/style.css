@@ -61,3 +61,17 @@ button:hover {
 .cell:hover {
     filter: brightness(90%);
 }
+.line {
+    display: none;
+    padding: 5px 0px;
+    border-radius: 5px;
+    width: 10px;
+    position: absolute;
+    /* height: hypot(67vh, 67vh); */
+    height: 75vh;
+    z-index: 5;
+    background-color: black;
+    justify-self: center;
+    align-self: center;
+    transform: translate(0vh, 0vh) rotate(0deg) scale(1, 1);
+}

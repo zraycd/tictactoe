@@ -27,6 +27,7 @@ ultimateBtn.addEventListener("click", () => {
 });
 
 resetBtn.addEventListener("click", () => {
+  current.winner = false;
   current.resetBoard();
   current.hideBoard();
   current.displayBoard();
@@ -34,5 +35,5 @@ resetBtn.addEventListener("click", () => {
 
 document.querySelector(".mainContainer").addEventListener("click", (event) => {
   handleClick(event.target, current);
-  console.log(event.target);
 });
+export default current;

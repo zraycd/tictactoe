@@ -1,3 +1,4 @@
+import current from ".";
 class baseGameboard {
   constructor(type) {
     this.type = type;
@@ -9,11 +10,11 @@ class baseGameboard {
     }
     this.moveCount = 0;
     this.lastMark = null;
-    this.winner = null;
+    this.winner = false;
   }
 
   getFocus() {
-    if (this.lastMark === null) {
+    if (current.type === "normal") {
       return this.board;
     } else {
       return this.board[this.lastMark.row][this.lastMark.col];
