@@ -20,9 +20,9 @@ class gameboardPlace extends baseGameboard {
   checkForWin(b) {
     // prettier-ignore
     const winningCombinations = [
-        [[0, 0], [0, 1], [0, 2], [-25, 0, 90, 1]],
+        [[0, 0], [0, 1], [0, 2], [0, -25, 90, 1]],
         [[1, 0], [1, 1], [1, 2], [0, 0, 90, 1]],
-        [[2, 0], [2, 1], [2, 2], [25, 0, 90, 1]],
+        [[2, 0], [2, 1], [2, 2], [0, 25, 90, 1]],
         
         [[0, 0], [1, 0], [2, 0], [-25, 0, 0, 1]],
         [[0, 1], [1, 1], [2, 1], [0, 0, 0, 1]],
@@ -40,8 +40,11 @@ class gameboardPlace extends baseGameboard {
         b[x[0]][x[1]] === b[y[0]][y[1]] &&
         b[x[0]][x[1]] === b[z[0]][z[1]]
       ) {
-        this.board = b[x[0]][x[1]];
+        if (this.type !== "normal") {
+          this.board = b[x[0]][x[1]];
+        }
         this.winner = b[x[0]][x[1]];
+        console.log(b);
         this.hideBoard();
         this.displayBoard(undefined, combination[3]);
 

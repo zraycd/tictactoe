@@ -5,21 +5,18 @@ class gameboardManipulation extends gameboardPlace {
     mainContainer = document.querySelector(".mainContainer"),
     winParams = []
   ) {
-    console.log(winParams[0]);
     if (this.winner) {
       let winLine = document.querySelector(".line");
 
       winLine.style.transform = `translate(${winParams[0]}vh, ${winParams[1]}vh) rotate(${winParams[2]}deg) scale(1, ${winParams[3]})`;
       winLine.style.display = "block";
-
-      return;
     }
 
     //prettier-ignore
     const coordinates = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]];
     let j = 0;
 
-    if (this.type === "normal" && !this.winner) {
+    if (this.type === "normal") {
       this.board.forEach((mainRow) => {
         mainRow.forEach((mainCol) => {
           let cell = document.createElement("div");
@@ -70,6 +67,7 @@ class gameboardManipulation extends gameboardPlace {
       //prettier-ignore
       this.board = new (require("./gameboard").default)("ultimate").board;
     }
+    document.querySelector(".line").style.display = "none";
   }
 }
 
