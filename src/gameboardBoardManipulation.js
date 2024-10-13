@@ -5,13 +5,13 @@ class gameboardManipulation extends gameboardPlace {
     mainContainer = document.querySelector(".mainContainer"),
     winParams = []
   ) {
-    if (this.winner) {
-      let winLine = document.querySelector(".line");
-
-      winLine.style.transform = `translate(${winParams[0]}vh, ${winParams[1]}vh) rotate(${winParams[2]}deg) scale(1, ${winParams[3]})`;
-      winLine.style.display = "block";
-    }
-
+    // if (typeof this.board === typeof "") {
+    //   let tempDiv = document.createElement("div");
+    //   tempDiv.classList.add("cell");
+    //   tempDiv.textContent = this.board;
+    //   document.querySelector(".mainContainer").appendChild(tempDiv);
+    //   return;
+    // }
     //prettier-ignore
     const coordinates = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]];
     let j = 0;
@@ -22,10 +22,11 @@ class gameboardManipulation extends gameboardPlace {
           let cell = document.createElement("div");
           cell.classList.add("cell");
           cell.dataset.coordinates = JSON.stringify(coordinates[j]);
-          typeof mainCol === typeof ""
-            ? (cell.textContent = mainCol)
-            : (cell.textContent =
-                mainCol[coordinates[j][0]][coordinates[j][1]]);
+          // typeof mainCol === typeof ""
+          //   ? (cell.textContent = mainCol)
+          //   : (cell.textContent =
+          //       mainCol[coordinates[j][0]][coordinates[j][1]]);
+          cell.textContent = mainCol;
 
           mainContainer.appendChild(cell);
           j++;
@@ -33,9 +34,12 @@ class gameboardManipulation extends gameboardPlace {
       });
     } else {
       j = 0;
-
       this.board.forEach((mainRow) => {
         mainRow.forEach((mainCol) => {
+          // if (typeof mainCol === typeof "") {
+          //   let tempDiv = document.createElement("div");
+          //   tempDiv.textContent = mainCol;
+          // } else {
           let container = document.createElement("div");
           container.classList.add("container");
           container.dataset.row = JSON.stringify(coordinates[j][0]);
@@ -43,6 +47,7 @@ class gameboardManipulation extends gameboardPlace {
           container.dataset.locked = JSON.stringify(true);
           mainContainer.appendChild(container);
           j++;
+          // }
         });
       });
 
@@ -60,9 +65,30 @@ class gameboardManipulation extends gameboardPlace {
             container.dataset.locked = JSON.stringify(false);
           }
         }
-        i.displayBoard(container);
+        if (typeof i.board === typeof "") {
+          console.log(this.type);
+          container.textContent = i.board;
+          container.classList.remove("container");
+          container.classList.add("cell");
+        } else {
+          console.log(i.type);
+          i.displayBoard(container);
+        }
       });
     }
+  }
+  displayWinLine(
+    container = document.querySelector(".mainContainer"),
+    winParams = []
+  ) {
+    if (this.winner) {
+      let winLine = document.querySelector(".line");
+
+      winLine.style.transform = `translate(${winParams[0]}vh, ${winParams[1]}vh) rotate(${winParams[2]}deg) scale(1, ${winParams[3]})`;
+      winLine.style.display = "block";
+    }
+
+    this.displayBoard();
   }
 
   hideBoard(board = document.querySelector(".mainContainer")) {

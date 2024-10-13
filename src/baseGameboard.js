@@ -10,6 +10,7 @@ class baseGameboard {
     }
     this.moveCount = 0;
     this.lastMark = null;
+    this.oldLastMark = null;
     this.winner = false;
   }
 

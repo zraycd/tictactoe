@@ -4,6 +4,7 @@ class gameboardPlace extends baseGameboard {
   placeMarker(row, col, container, marker) {
     if (container[row][col] === "") {
       container[row][col] = marker;
+      this.oldLastMark = this.lastMark;
       this.lastMark = { row: row, col: col };
       this.checkForWin(container);
     } else {
@@ -35,13 +36,14 @@ class gameboardPlace extends baseGameboard {
         b[x[0]][x[1]] === b[y[0]][y[1]] &&
         b[x[0]][x[1]] === b[z[0]][z[1]]
       ) {
+        this.hideBoard();
         this.winner = b[x[0]][x[1]];
         if (this.type !== "normal") {
-          this.board = this.winner;
+          this.board[this.oldLastMark.row][this.oldLastMark.col] = this.winner;
+          console.log(this.board);
         }
-        console.log(b);
-        this.hideBoard();
-        this.displayBoard(undefined, combination[3]);
+
+        this.displayWinLine(undefined, combination[3]);
 
         return combination;
       }
