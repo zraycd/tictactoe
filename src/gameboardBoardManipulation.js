@@ -40,7 +40,7 @@ class gameboardManipulation extends gameboardPlace {
           container.classList.add("container");
           container.dataset.row = JSON.stringify(coordinates[j][0]);
           container.dataset.col = JSON.stringify(coordinates[j][1]);
-          container.dataset.locked = JSON.stringify(false);
+          container.dataset.locked = JSON.stringify(true);
           mainContainer.appendChild(container);
           j++;
         });
@@ -49,12 +49,23 @@ class gameboardManipulation extends gameboardPlace {
       document.querySelectorAll(".container").forEach((container) => {
         let i = new (require("./gameboard").default)("normal");
         i.board = this.board[container.dataset.row][container.dataset.col];
+        if (this.lastMark === null) {
+          container.dataset.locked = JSON.stringify(false);
+        } else {
+          container.dataset.locked = JSON.stringify(true);
+          if (
+            JSON.parse(container.dataset.row) === this.lastMark.row &&
+            JSON.parse(container.dataset.col) === this.lastMark.col
+          ) {
+            container.dataset.locked = JSON.stringify(false);
+          }
+        }
         i.displayBoard(container);
       });
     }
   }
 
-  hideBoard() {
+  hideBoard(board = document.querySelector(".mainContainer")) {
     document.querySelectorAll(".container").forEach((ctn) => ctn.remove());
     document.querySelectorAll(".cell").forEach((cell) => cell.remove());
   }
@@ -66,6 +77,7 @@ class gameboardManipulation extends gameboardPlace {
     if (this.type !== "normal") {
       //prettier-ignore
       this.board = new (require("./gameboard").default)("ultimate").board;
+      this.lastMark = null;
     }
     document.querySelector(".line").style.display = "none";
   }

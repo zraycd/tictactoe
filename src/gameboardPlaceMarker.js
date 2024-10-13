@@ -4,17 +4,12 @@ class gameboardPlace extends baseGameboard {
   placeMarker(row, col, container, marker) {
     if (container[row][col] === "") {
       container[row][col] = marker;
+      this.lastMark = { row: row, col: col };
       this.checkForWin(container);
     } else {
       return;
     }
-
-    // if (this.lastMark === null) {
-    //   container[row][col] = marker
-    // }
-
     this.moveCount++;
-    this.lastMark = { row: row, col: col };
   }
 
   checkForWin(b) {
@@ -40,10 +35,10 @@ class gameboardPlace extends baseGameboard {
         b[x[0]][x[1]] === b[y[0]][y[1]] &&
         b[x[0]][x[1]] === b[z[0]][z[1]]
       ) {
-        if (this.type !== "normal") {
-          this.board = b[x[0]][x[1]];
-        }
         this.winner = b[x[0]][x[1]];
+        if (this.type !== "normal") {
+          this.board = this.winner;
+        }
         console.log(b);
         this.hideBoard();
         this.displayBoard(undefined, combination[3]);

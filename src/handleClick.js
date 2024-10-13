@@ -7,7 +7,6 @@ function handleClick(target, current) {
   let containerRow = JSON.parse(target.parentElement.getAttribute("data-row"));
   let containerCol = JSON.parse(target.parentElement.getAttribute("data-col"));
   let marker;
-  let containers = document.querySelectorAll(".container");
 
   current.moveCount % 2 === 0 ? (marker = "X") : (marker = "O");
 
@@ -16,7 +15,7 @@ function handleClick(target, current) {
     current.placeMarker(cellCoordinates[0], cellCoordinates[1], current.board, marker);
     return;
   } else {
-    if (!JSON.parse(target.parentElement.getAttribute("locked"))) {
+    if (!JSON.parse(target.parentElement.getAttribute("data-locked"))) {
       current.placeMarker(
         cellCoordinates[0],
         cellCoordinates[1],
@@ -24,28 +23,8 @@ function handleClick(target, current) {
         marker
       );
     } else {
-      // current.placeMarker(
-      //   cellCoordinates[0],
-      //   cellCoordinates[1],
-      //   current.board[current.lastMark.row][current.lastMark.col],
-      //   marker
-      // );
       return;
     }
-    if (current.lastMark === null && current.type !== "normal") {
-      containers.forEach((ctn) => {
-        ctn.dataset.locked = JSON.stringify(true);
-      });
-    }
-
-    containers.forEach((ctn) => {
-      if (
-        JSON.parse(ctn.dataset.row) === current.lastMark.row &&
-        JSON.parse(ctn.dataset.col) === current.lastMark.col
-      ) {
-        ctn.dataset.locked = JSON.stringify(false);
-      }
-    });
   }
 }
 

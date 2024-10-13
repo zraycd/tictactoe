@@ -16,12 +16,18 @@ current = normalGame;
 
 normalBtn.addEventListener("click", () => {
   current = normalGame;
+  normalGame.winner
+    ? (document.querySelector(".line").style.display = "block")
+    : (document.querySelector(".line").style.display = "none");
   ultimateGame.hideBoard();
   normalGame.displayBoard();
 });
 
 ultimateBtn.addEventListener("click", () => {
   current = ultimateGame;
+  ultimateGame.winner
+    ? (document.querySelector(".line").style.display = "block")
+    : (document.querySelector(".line").style.display = "none");
   normalGame.hideBoard();
   ultimateGame.displayBoard();
 });
