@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@600&family=Nova+Square&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 body {
     overflow: hidden;
     background-color: lightgrey;
@@ -57,6 +58,17 @@ button:hover {
 }
 .cell {
     background-color: lightgrey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 200;
+    font-family: "Manrope", sans-serif;
+}
+.mainContainer > .cell {
+    font-size: 6rem;
+}
+.container > .cell {
+    font-size: 2rem;
 }
 .cell:hover {
     filter: brightness(90%);
