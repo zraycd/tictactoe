@@ -67,7 +67,6 @@ button:hover {
     border-radius: 5px;
     width: 10px;
     position: absolute;
-    /* height: hypot(67vh, 67vh); */
     height: 75vh;
     z-index: 5;
     background-color: black;

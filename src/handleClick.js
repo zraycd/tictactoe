@@ -15,7 +15,6 @@ function handleClick(target, current) {
     current.placeMarker(cellCoordinates[0], cellCoordinates[1], current.board, marker);
     return;
   } else {
-    console.log(current.finalWinner);
     if (
       !JSON.parse(target.parentElement.getAttribute("data-locked")) &&
       !current.finalWinner

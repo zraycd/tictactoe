@@ -4,7 +4,6 @@ class gameboardPlace extends baseGameboard {
   placeMarker(row, col, container, marker, ctnRow = null, ctnCol = null) {
     if (container[row][col] === "") {
       container[row][col] = marker;
-      // this.oldLastMark = this.lastMark;
 
       this.lastMark = { row: row, col: col };
       this.checkForWin(container, ctnRow, ctnCol);

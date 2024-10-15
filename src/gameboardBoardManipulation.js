@@ -5,13 +5,6 @@ class gameboardManipulation extends gameboardPlace {
     mainContainer = document.querySelector(".mainContainer"),
     winParams = []
   ) {
-    // if (typeof this.board === typeof "") {
-    //   let tempDiv = document.createElement("div");
-    //   tempDiv.classList.add("cell");
-    //   tempDiv.textContent = this.board;
-    //   document.querySelector(".mainContainer").appendChild(tempDiv);
-    //   return;
-    // }
     //prettier-ignore
     const coordinates = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]];
     let j = 0;
@@ -22,10 +15,6 @@ class gameboardManipulation extends gameboardPlace {
           let cell = document.createElement("div");
           cell.classList.add("cell");
           cell.dataset.coordinates = JSON.stringify(coordinates[j]);
-          // typeof mainCol === typeof ""
-          //   ? (cell.textContent = mainCol)
-          //   : (cell.textContent =
-          //       mainCol[coordinates[j][0]][coordinates[j][1]]);
           cell.textContent = mainCol;
 
           mainContainer.appendChild(cell);
@@ -36,10 +25,6 @@ class gameboardManipulation extends gameboardPlace {
       j = 0;
       this.board.forEach((mainRow) => {
         mainRow.forEach((mainCol) => {
-          // if (typeof mainCol === typeof "") {
-          //   let tempDiv = document.createElement("div");
-          //   tempDiv.textContent = mainCol;
-          // } else {
           let container = document.createElement("div");
           container.classList.add("container");
           container.dataset.row = JSON.stringify(coordinates[j][0]);
@@ -48,7 +33,6 @@ class gameboardManipulation extends gameboardPlace {
           container.dataset.win = JSON.stringify(false);
           mainContainer.appendChild(container);
           j++;
-          // }
         });
       });
       this.controlContainers();
@@ -101,21 +85,23 @@ class gameboardManipulation extends gameboardPlace {
     } else {
       return;
     }
-    this.controlContainers(undefined, false);
+    this.hideBoard;
+    this.controlContainers();
     let cellAmount = 0;
     container.childNodes.forEach((node) => {
       if (node.classList !== undefined && node.classList[0] === "cell") {
         cellAmount++;
       }
     });
-    console.log(cellAmount);
     if (cellAmount > 2) {
       let winLine = document.querySelector(".line");
-
+      this.hideBoard();
+      this.displayBoard();
       winLine.style.transform = `translate(${winParams[0]}vh, ${winParams[1]}vh) rotate(${winParams[2]}deg) scale(1, ${winParams[3]})`;
       winLine.style.display = "block";
 
       this.finalWinner = true;
+      this.winner = true;
     }
   }
 
@@ -133,6 +119,8 @@ class gameboardManipulation extends gameboardPlace {
       this.board = new (require("./gameboard").default)("ultimate").board;
       this.lastMark = null;
     }
+    this.winner = null;
+    this.finalWinner = null;
     document.querySelector(".line").style.display = "none";
   }
 }
