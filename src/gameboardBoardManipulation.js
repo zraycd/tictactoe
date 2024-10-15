@@ -50,6 +50,7 @@ class gameboardManipulation extends gameboardPlace {
       if (typeof i.board === typeof "") {
         container.textContent = i.board;
         container.dataset.win = "true";
+        container.style.opacity = "0.75";
         container.classList.remove("container");
         container.classList.add("cell");
       } else if (appendCells) {
@@ -73,9 +74,14 @@ class gameboardManipulation extends gameboardPlace {
 
         if (matchesRow && matchesCol && isWon) {
           tempMark = null;
-          this.controlContainers(undefined, false);
+          this.unlock();
         }
       }
+    });
+  }
+  unlock() {
+    document.querySelectorAll(".container").forEach((ctn) => {
+      ctn.dataset.locked = "false";
     });
   }
   displayWinLine(container = document.querySelector(".mainContainer")) {
@@ -85,12 +91,13 @@ class gameboardManipulation extends gameboardPlace {
     } else {
       return;
     }
-    this.hideBoard;
-    this.controlContainers();
+    this.hideBoard();
+    this.displayBoard();
     let cellAmount = 0;
     container.childNodes.forEach((node) => {
       if (node.classList !== undefined && node.classList[0] === "cell") {
         cellAmount++;
+        console.log(cellAmount);
       }
     });
     if (cellAmount > 2) {

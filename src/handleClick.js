@@ -31,6 +31,15 @@ function handleClick(target, current) {
       return;
     }
   }
+
+  document.querySelectorAll(".container").forEach((container) => {
+    if (JSON.parse(container.dataset.locked)) {
+      container.classList.add("locked");
+    } else {
+      container.classList.remove("locked");
+      container.classList.add("unlocked");
+    }
+  });
 }
 
 export default handleClick;
