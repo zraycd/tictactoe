@@ -45,49 +45,75 @@ class gameboardManipulation extends gameboardPlace {
           container.dataset.row = JSON.stringify(coordinates[j][0]);
           container.dataset.col = JSON.stringify(coordinates[j][1]);
           container.dataset.locked = JSON.stringify(true);
+          container.dataset.win = JSON.stringify(false);
           mainContainer.appendChild(container);
           j++;
           // }
         });
       });
-
-      document.querySelectorAll(".container").forEach((container) => {
-        let i = new (require("./gameboard").default)("normal");
-        i.board = this.board[container.dataset.row][container.dataset.col];
-        if (this.lastMark === null) {
-          container.dataset.locked = JSON.stringify(false);
-        } else {
-          container.dataset.locked = JSON.stringify(true);
-          if (
-            JSON.parse(container.dataset.row) === this.lastMark.row &&
-            JSON.parse(container.dataset.col) === this.lastMark.col
-          ) {
-            container.dataset.locked = JSON.stringify(false);
-          }
-        }
-        if (typeof i.board === typeof "") {
-          console.log(this.type);
-          container.textContent = i.board;
-          container.classList.remove("container");
-          container.classList.add("cell");
-        } else {
-          console.log(i.type);
-          i.displayBoard(container);
-        }
-      });
+      this.controlContainers();
     }
+  }
+  controlContainers(
+    containers = document.querySelectorAll(".container"),
+    appendCells = true,
+    lMark = this.lastMark
+  ) {
+    console.log(lMark === null);
+    let temp = this.lastMark;
+    containers.forEach((container) => {
+      let i = new (require("./gameboard").default)("normal");
+      i.board = this.board[container.dataset.row][container.dataset.col];
+
+      if (typeof i.board === typeof "") {
+        container.textContent = i.board;
+        container.dataset.win = "true";
+        container.classList.remove("container");
+        container.classList.add("cell");
+      } else if (appendCells) {
+        i.displayBoard(container);
+      }
+
+      if (this.lastMark === null) {
+        container.dataset.locked = JSON.stringify(false);
+      } else {
+        container.dataset.locked = JSON.stringify(true);
+        //prettier-ignore
+        let matchesRow = JSON.parse(container.dataset.row) === this.lastMark.row;
+        //prettier-ignore
+        let matchesCol = JSON.parse(container.dataset.col) === this.lastMark.col;
+
+        let isWon = JSON.parse(container.dataset.win);
+
+        if (matchesRow && matchesCol && !isWon) {
+          container.dataset.locked = "false";
+        }
+
+        if (matchesRow && matchesCol && isWon) {
+          this.lastMark = null;
+          this.controlContainers(undefined, false, null);
+        }
+      }
+    });
+    this.lastMark = temp;
   }
   displayWinLine(
     container = document.querySelector(".mainContainer"),
     winParams = []
   ) {
-    if (this.winner) {
+    let cellAmount = 0;
+    container.childNodes.forEach((node) => {
+      if (node.classList !== undefined && node.classList[0] === "cell") {
+        cellAmount++;
+      }
+    });
+    if (cellAmount > 2) {
       let winLine = document.querySelector(".line");
 
       winLine.style.transform = `translate(${winParams[0]}vh, ${winParams[1]}vh) rotate(${winParams[2]}deg) scale(1, ${winParams[3]})`;
       winLine.style.display = "block";
     }
-
+    this.hideBoard();
     this.displayBoard();
   }
 
@@ -110,3 +136,9 @@ class gameboardManipulation extends gameboardPlace {
 }
 
 export default gameboardManipulation;
+
+// at the start of the game lastMark = null
+// if lastMark is null, unlock every container
+// if lastMark isnt null, lock every container, except the one that matches lastMark coordinates
+// if lastMark coordinates match the coordinates of a container that has been won already, unlock every other container
+// if container is won, lock it

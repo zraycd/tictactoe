@@ -1,5 +1,5 @@
 function handleClick(target, current) {
-  if (current.winner) {
+  if (current.winner && current.type === "normal") {
     return;
   }
 
