@@ -1,19 +1,20 @@
 import baseGameboard from "./baseGameboard";
 
 class gameboardPlace extends baseGameboard {
-  placeMarker(row, col, container, marker) {
+  placeMarker(row, col, container, marker, ctnRow = null, ctnCol = null) {
     if (container[row][col] === "") {
       container[row][col] = marker;
-      this.oldLastMark = this.lastMark;
+      // this.oldLastMark = this.lastMark;
+
       this.lastMark = { row: row, col: col };
-      this.checkForWin(container);
+      this.checkForWin(container, ctnRow, ctnCol);
     } else {
       return;
     }
     this.moveCount++;
   }
 
-  checkForWin(b) {
+  checkForWin(b, row, col) {
     // prettier-ignore
     const winningCombinations = [
         [[0, 0], [0, 1], [0, 2], [0, -25, 90, 1]],
@@ -36,11 +37,14 @@ class gameboardPlace extends baseGameboard {
         b[x[0]][x[1]] === b[y[0]][y[1]] &&
         b[x[0]][x[1]] === b[z[0]][z[1]]
       ) {
-        this.winner = b[x[0]][x[1]];
-        if (this.type !== "normal") {
-          this.board[this.oldLastMark.row][this.oldLastMark.col] = this.winner;
+        if (this.type !== "normal" && !this.finalWinner && this.board[row]) {
+          this.board[row][col] = this.board[row][col][x[0]][x[1]];
+          this.displayWinLine();
         }
-        this.displayWinLine(undefined, combination[3]);
+        if (this.type === "normal" && !this.winner) {
+          this.winner = b[x[0]][x[1]];
+          this.displayWinLine();
+        }
 
         return combination;
       }

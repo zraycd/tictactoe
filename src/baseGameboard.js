@@ -12,6 +12,7 @@ class baseGameboard {
     this.lastMark = null;
     this.oldLastMark = null;
     this.winner = false;
+    this.finalWinner = false;
   }
 
   getFocus() {

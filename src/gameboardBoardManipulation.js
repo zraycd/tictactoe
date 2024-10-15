@@ -56,11 +56,9 @@ class gameboardManipulation extends gameboardPlace {
   }
   controlContainers(
     containers = document.querySelectorAll(".container"),
-    appendCells = true,
-    lMark = this.lastMark
+    appendCells = true
   ) {
-    console.log(lMark === null);
-    let temp = this.lastMark;
+    let tempMark = this.lastMark;
     containers.forEach((container) => {
       let i = new (require("./gameboard").default)("normal");
       i.board = this.board[container.dataset.row][container.dataset.col];
@@ -74,14 +72,14 @@ class gameboardManipulation extends gameboardPlace {
         i.displayBoard(container);
       }
 
-      if (this.lastMark === null) {
-        container.dataset.locked = JSON.stringify(false);
+      if (tempMark === null) {
+        container.dataset.locked = "false";
       } else {
-        container.dataset.locked = JSON.stringify(true);
+        container.dataset.locked = "true";
         //prettier-ignore
-        let matchesRow = JSON.parse(container.dataset.row) === this.lastMark.row;
+        let matchesRow = JSON.parse(container.dataset.row) === tempMark.row;
         //prettier-ignore
-        let matchesCol = JSON.parse(container.dataset.col) === this.lastMark.col;
+        let matchesCol = JSON.parse(container.dataset.col) === tempMark.col;
 
         let isWon = JSON.parse(container.dataset.win);
 
@@ -90,31 +88,35 @@ class gameboardManipulation extends gameboardPlace {
         }
 
         if (matchesRow && matchesCol && isWon) {
-          this.lastMark = null;
-          this.controlContainers(undefined, false, null);
+          tempMark = null;
+          this.controlContainers(undefined, false);
         }
       }
     });
-    this.lastMark = temp;
   }
-  displayWinLine(
-    container = document.querySelector(".mainContainer"),
-    winParams = []
-  ) {
+  displayWinLine(container = document.querySelector(".mainContainer")) {
+    let winParams = this.checkForWin(this.board);
+    if (winParams) {
+      winParams = winParams[3];
+    } else {
+      return;
+    }
+    this.controlContainers(undefined, false);
     let cellAmount = 0;
     container.childNodes.forEach((node) => {
       if (node.classList !== undefined && node.classList[0] === "cell") {
         cellAmount++;
       }
     });
+    console.log(cellAmount);
     if (cellAmount > 2) {
       let winLine = document.querySelector(".line");
 
       winLine.style.transform = `translate(${winParams[0]}vh, ${winParams[1]}vh) rotate(${winParams[2]}deg) scale(1, ${winParams[3]})`;
       winLine.style.display = "block";
+
+      this.finalWinner = true;
     }
-    this.hideBoard();
-    this.displayBoard();
   }
 
   hideBoard(board = document.querySelector(".mainContainer")) {

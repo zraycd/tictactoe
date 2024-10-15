@@ -15,12 +15,18 @@ function handleClick(target, current) {
     current.placeMarker(cellCoordinates[0], cellCoordinates[1], current.board, marker);
     return;
   } else {
-    if (!JSON.parse(target.parentElement.getAttribute("data-locked"))) {
+    console.log(current.finalWinner);
+    if (
+      !JSON.parse(target.parentElement.getAttribute("data-locked")) &&
+      !current.finalWinner
+    ) {
       current.placeMarker(
         cellCoordinates[0],
         cellCoordinates[1],
         current.board[containerRow][containerCol],
-        marker
+        marker,
+        containerRow,
+        containerCol
       );
     } else {
       return;
