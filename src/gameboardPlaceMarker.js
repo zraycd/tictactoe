@@ -5,9 +5,9 @@ class gameboardPlace extends baseGameboard {
     if (container[row][col] === "") {
       container[row][col] = marker;
 
+      this.moveCount++;
       this.lastMark = { row: row, col: col };
       this.checkForWin(container, ctnRow, ctnCol);
-      this.moveCount++;
     } else {
       return;
     }

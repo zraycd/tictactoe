@@ -110,7 +110,7 @@ button:hover {
         opacity: 1;
     }
 }
-@media (max-width: 750px) {
+@media (max-width: 500px) {
     .mainContainer {
         height: 50%;
         aspect-ratio: 1 / 1;
