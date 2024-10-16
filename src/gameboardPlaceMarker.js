@@ -7,10 +7,10 @@ class gameboardPlace extends baseGameboard {
 
       this.lastMark = { row: row, col: col };
       this.checkForWin(container, ctnRow, ctnCol);
+      this.moveCount++;
     } else {
       return;
     }
-    this.moveCount++;
   }
 
   checkForWin(b, row, col) {
