@@ -86,6 +86,13 @@ class gameboardManipulation extends gameboardPlace {
   }
   displayWinLine(container = document.querySelector(".mainContainer")) {
     let winParams = this.checkForWin(this.board);
+    console.log(winParams[3]);
+    if (window.innerWidth < 750) {
+      winParams[3][0] = Math.ceil((winParams[3][0] / 3) * 2);
+      winParams[3][1] = Math.ceil((winParams[3][1] / 3) * 2);
+      winParams[3][3] = Number(((winParams[3][3] / 3) * 2).toFixed(2));
+      console.log(winParams[3]);
+    }
     if (winParams) {
       winParams = winParams[3];
     } else {
@@ -97,7 +104,6 @@ class gameboardManipulation extends gameboardPlace {
     container.childNodes.forEach((node) => {
       if (node.classList !== undefined && node.classList[0] === "cell") {
         cellAmount++;
-        console.log(cellAmount);
       }
     });
     if (cellAmount > 2) {
