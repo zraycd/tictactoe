@@ -88,8 +88,8 @@ class gameboardManipulation extends gameboardPlace {
     let winParams = this.checkForWin(this.board);
     console.log(winParams[3]);
     if (window.innerWidth < 750) {
-      winParams[3][0] = Math.ceil((winParams[3][0] / 3) * 2);
-      winParams[3][1] = Math.ceil((winParams[3][1] / 3) * 2);
+      winParams[3][0] = Math.floor((winParams[3][0] / 3) * 2);
+      winParams[3][1] = Math.floor((winParams[3][1] / 3) * 2);
       winParams[3][3] = Number(((winParams[3][3] / 3) * 2).toFixed(2));
       console.log(winParams[3]);
     }
@@ -139,9 +139,3 @@ class gameboardManipulation extends gameboardPlace {
 }
 
 export default gameboardManipulation;
-
-// at the start of the game lastMark = null
-// if lastMark is null, unlock every container
-// if lastMark isnt null, lock every container, except the one that matches lastMark coordinates
-// if lastMark coordinates match the coordinates of a container that has been won already, unlock every other container
-// if container is won, lock it

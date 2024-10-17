@@ -123,9 +123,12 @@ button:hover {
         font-size: 4rem;
     }
     .container > .cell {
-        font-size: 1.33rem;
+        font-size: 1.12rem;
     }
-    .mainContainer, .container {
-        gap: 5px;
+    .mainContainer {
+        gap: 3px;
+    }
+    .container {
+        gap: 1px;
     }
 }
