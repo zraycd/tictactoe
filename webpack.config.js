@@ -9,7 +9,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Todo list",
+      title: "",
       template: "./src/index.html",
     }),
   ],

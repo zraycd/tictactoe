@@ -7,13 +7,13 @@ class gameboardPlace extends baseGameboard {
 
       this.moveCount++;
       this.lastMark = { row: row, col: col };
-      this.checkForWin(container, ctnRow, ctnCol);
+      this.checkForWin(container, false, ctnRow, ctnCol);
     } else {
       return;
     }
   }
 
-  checkForWin(b, row, col) {
+  checkForWin(b, final = false, row, col) {
     // prettier-ignore
     const winningCombinations = [
         [[0, 0], [0, 1], [0, 2], [0, -25.5, 90, 1]],
@@ -36,9 +36,13 @@ class gameboardPlace extends baseGameboard {
         b[x[0]][x[1]] === b[y[0]][y[1]] &&
         b[x[0]][x[1]] === b[z[0]][z[1]]
       ) {
+        if (final) {
+          this.displayWinLine(combination[3]);
+          return;
+        }
         if (this.type !== "normal" && !this.finalWinner && this.board[row]) {
           this.board[row][col] = this.board[row][col][x[0]][x[1]];
-          this.displayWinLine();
+          this.checkForWin(this.board, true);
         }
         if (this.type === "normal" && !this.winner) {
           this.winner = b[x[0]][x[1]];

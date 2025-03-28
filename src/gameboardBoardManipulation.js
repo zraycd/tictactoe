@@ -1,10 +1,7 @@
 import gameboardPlace from "./gameboardPlaceMarker";
 
 class gameboardManipulation extends gameboardPlace {
-  displayBoard(
-    mainContainer = document.querySelector(".mainContainer"),
-    winParams = []
-  ) {
+  displayBoard(mainContainer = document.querySelector(".mainContainer")) {
     //prettier-ignore
     const coordinates = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]];
     let j = 0;
@@ -24,7 +21,7 @@ class gameboardManipulation extends gameboardPlace {
     } else {
       j = 0;
       this.board.forEach((mainRow) => {
-        mainRow.forEach((mainCol) => {
+        mainRow.forEach(() => {
           let container = document.createElement("div");
           container.classList.add("container");
           container.dataset.row = JSON.stringify(coordinates[j][0]);
@@ -37,6 +34,7 @@ class gameboardManipulation extends gameboardPlace {
       });
       this.controlContainers();
     }
+    this.controlOpacity();
   }
   controlContainers(
     containers = document.querySelectorAll(".container"),
@@ -84,38 +82,25 @@ class gameboardManipulation extends gameboardPlace {
       ctn.dataset.locked = "false";
     });
   }
-  displayWinLine(container = document.querySelector(".mainContainer")) {
-    let winParams = this.checkForWin(this.board);
-    console.log(winParams[3]);
-    if (window.innerWidth < 750) {
-      winParams[3][0] = Math.floor((winParams[3][0] / 3) * 2);
-      winParams[3][1] = Math.floor((winParams[3][1] / 3) * 2);
-      winParams[3][3] = Number(((winParams[3][3] / 3) * 2).toFixed(2));
-      console.log(winParams[3]);
-    }
-    if (winParams) {
-      winParams = winParams[3];
-    } else {
-      return;
-    }
+  displayWinLine(winParams) {
+    let winLine = document.querySelector(".line");
+
+    this.finalWinner = true;
+    this.winner = true;
+
     this.hideBoard();
     this.displayBoard();
-    let cellAmount = 0;
-    container.childNodes.forEach((node) => {
-      if (node.classList !== undefined && node.classList[0] === "cell") {
-        cellAmount++;
-      }
-    });
-    if (cellAmount > 2) {
-      let winLine = document.querySelector(".line");
-      this.hideBoard();
-      this.displayBoard();
-      winLine.style.transform = `translate(${winParams[0]}vh, ${winParams[1]}vh) rotate(${winParams[2]}deg) scale(1, ${winParams[3]})`;
-      winLine.style.display = "block";
+    winLine.style.transform = `translate(${winParams[0]}vh, ${winParams[1]}vh) rotate(${winParams[2]}deg) scale(1, ${winParams[3]})`;
+    winLine.style.display = "block";
 
-      this.finalWinner = true;
-      this.winner = true;
-    }
+    document.querySelectorAll(".container").forEach((ctn) => {
+      ctn.classList.remove("locked");
+      ctn.classList.add("unlocked");
+    });
+    document.querySelectorAll(".cell").forEach((c) => {
+      c.classList.remove("locked");
+      c.classList.add("unlocked");
+    });
   }
 
   hideBoard(board = document.querySelector(".mainContainer")) {
@@ -135,6 +120,16 @@ class gameboardManipulation extends gameboardPlace {
     this.winner = null;
     this.finalWinner = null;
     document.querySelector(".line").style.display = "none";
+  }
+  controlOpacity() {
+    document.querySelectorAll(".container").forEach((container) => {
+      if (JSON.parse(container.dataset.locked)) {
+        container.classList.add("locked");
+      } else {
+        container.classList.remove("locked");
+        container.classList.add("unlocked");
+      }
+    });
   }
 }
 

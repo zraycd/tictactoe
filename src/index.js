@@ -34,6 +34,7 @@ ultimateBtn.addEventListener("click", () => {
 
 resetBtn.addEventListener("click", () => {
   current.winner = false;
+  current.finalWinner = false;
   current.resetBoard();
   current.hideBoard();
   current.displayBoard();
