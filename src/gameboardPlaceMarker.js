@@ -46,7 +46,7 @@ class gameboardPlace extends baseGameboard {
         }
         if (this.type === "normal" && !this.winner) {
           this.winner = b[x[0]][x[1]];
-          this.displayWinLine();
+          this.displayWinLine(combination[3]);
         }
 
         return combination;

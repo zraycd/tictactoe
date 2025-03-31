@@ -96,7 +96,7 @@ class gameboardManipulation extends gameboardPlace {
 
     this.hideBoard();
     this.displayBoard();
-    winLine.style.transform = `translate(${winParams[0]}vh, ${winParams[1]}vh) rotate(${winParams[2]}deg) scale(1, ${winParams[3]})`;
+    winLine.style.transform = `translate(${winParams[0]}dvh, ${winParams[1]}dvh) rotate(${winParams[2]}deg) scale(1, ${winParams[3]})`;
     winLine.style.display = "block";
 
     document.querySelectorAll(".container").forEach((ctn) => {
