@@ -88,6 +88,12 @@ class gameboardManipulation extends gameboardPlace {
     this.finalWinner = true;
     this.winner = true;
 
+    if (window.innerWidth < 600) {
+      winParams[0] = Number((winParams[0] * 0.6589).toFixed(3));
+      winParams[1] = Number((winParams[1] * 0.6589).toFixed(3));
+      winParams[3] = Number(((winParams[3] / 3) * 2).toFixed(2));
+    }
+
     this.hideBoard();
     this.displayBoard();
     winLine.style.transform = `translate(${winParams[0]}vh, ${winParams[1]}vh) rotate(${winParams[2]}deg) scale(1, ${winParams[3]})`;

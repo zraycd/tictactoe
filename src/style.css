@@ -39,7 +39,7 @@ button:hover {
     filter: brightness(95%);
 }
 .mainContainer {
-    height: 75%;
+    height: 75dvh;
     aspect-ratio: 1 / 1;
 }
 
@@ -110,7 +110,7 @@ button:hover {
         opacity: 1;
     }
 }
-@media (max-width: 500px) {
+@media (max-width: 600px) {
     .mainContainer {
         height: 50%;
         aspect-ratio: 1 / 1;
@@ -130,5 +130,18 @@ button:hover {
     }
     .container {
         gap: 1px;
+    }
+    .line {
+        display: none;
+        padding: 3px 0px;
+        border-radius: 3px;
+        width: 6px;
+        position: absolute;
+        height: 75vh;
+        z-index: 5;
+        background-color: black;
+        justify-self: center;
+        align-self: center;
+        transform: translate(0vh, 0vh) rotate(0deg) scale(1, 1);
     }
 }
