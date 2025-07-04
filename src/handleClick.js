@@ -7,7 +7,7 @@ function handleClick(target, current) {
   let containerCol = JSON.parse(target.parentElement.getAttribute("data-col"));
   let marker;
 
-  current.moveCount % 2 === 0 ? (marker = "x") : (marker = "o");
+  current.moveCount % 2 === 0 ? (marker = "X") : (marker = "O");
 
   if (current.type === "normal") {
     //prettier-ignore

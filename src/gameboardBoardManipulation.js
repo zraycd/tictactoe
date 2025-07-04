@@ -93,6 +93,7 @@ class gameboardManipulation extends gameboardPlace {
       winParams[1] = Number((winParams[1] * 0.6589).toFixed(3));
       winParams[3] = Number(((winParams[3] / 3) * 2).toFixed(2));
     }
+    console.log(winParams);
 
     this.hideBoard();
     this.displayBoard();
